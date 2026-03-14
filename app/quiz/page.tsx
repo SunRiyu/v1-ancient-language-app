@@ -41,25 +41,17 @@ function QuizContent() {
 
   // Initialize quiz on mount
   useEffect(() => {
-    const initializeQuiz = async () => {
-      let generatedQuestions: Question[] = []
-      
-      // Check if type is a prefix ID (ad, con, de, ex, in, per, pre, pro, re, sub)
-      const prefixIds = ['ad', 'con', 'de', 'ex', 'in', 'per', 'pre', 'pro', 're', 'sub']
-      
-      if (prefixIds.includes(typeParam)) {
-        // Load prefix questions from the data files
-        generatedQuestions = await loadPrefixQuestions(typeParam)
-      } else {
-        // Fallback to default generation for other types
-        generatedQuestions = generateQuestions({} as any, typeParam)
-      }
-      
-      setQuestions(generatedQuestions)
-      setIsLoaded(true)
+    const prefixIds = ['ad', 'con', 'de', 'ex', 'in', 'per', 'pre', 'pro', 're', 'sub']
+    let generatedQuestions: Question[] = []
+
+    if (prefixIds.includes(typeParam)) {
+      generatedQuestions = loadPrefixQuestions(typeParam)
+    } else {
+      generatedQuestions = generateQuestions({} as any, typeParam)
     }
-    
-    initializeQuiz()
+
+    setQuestions(generatedQuestions)
+    setIsLoaded(true)
   }, [typeParam])
 
   const handleAnswer = (selectedIndexOrParts: number | string[]) => {
@@ -111,10 +103,9 @@ function QuizContent() {
       setShowResultEffect(false)
       setTimerKey(prev => prev + 1)
     } else {
-      // Quiz finished
       handleQuizComplete()
     }
-  }, [currentQuestionIndex, questions.length])
+  }, [currentQuestionIndex, questions.length, handleQuizComplete])
 
   const handleTimeUp = useCallback(() => {
     // Force answer as incorrect if time runs out
@@ -143,8 +134,9 @@ function QuizContent() {
 
   const resetKey = `${currentQuestionIndex}-${isAnswered}`
 
-  const handleQuizComplete = () => {
-    const passed = checkPassCriteria(answers)
+  const handleQuizComplete = useCallback((finalAnswers?: typeof answers) => {
+    const answersToCheck = finalAnswers ?? answers
+    const passed = checkPassCriteria(answersToCheck)
     if (passed) {
       setShowUnlock(true)
       setTimeout(() => {
@@ -153,6 +145,10 @@ function QuizContent() {
     } else {
       router.push(`/quiz-result?passed=false`)
     }
+  }, [answers, router])
+
+  const handleQuit = () => {
+    router.push('/learning-path/prefix-select?course=' + courseParam)
   }
 
   if (!isLoaded || questions.length === 0) {
@@ -182,6 +178,16 @@ function QuizContent() {
         title="単語合成クイズ"
         subtitle="2つの単語を組み合わせて、新しい単語を作ろう！"
       />
+
+      {/* Quit button - top right */}
+      <div className="absolute top-4 right-4 z-20">
+        <button
+          onClick={handleQuit}
+          className="px-4 py-2 bg-stone-800/80 hover:bg-stone-700 border border-stone-600 hover:border-red-500/60 text-stone-300 hover:text-red-300 rounded-lg text-sm font-semibold transition-all"
+        >
+          中断
+        </button>
+      </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-12">
         <BackButton />

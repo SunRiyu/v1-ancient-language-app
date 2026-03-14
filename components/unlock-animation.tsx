@@ -22,9 +22,8 @@ export function UnlockAnimation({ isVisible, course, etymologyName }: UnlockAnim
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/90 backdrop-blur-sm animate-in fade-in duration-500">
       <div className="text-center animate-in zoom-in-95 slide-in-from-bottom-4 duration-700">
-        {/* Unlock icon */}
-        <div className="mb-6 relative">
-          <div className="w-24 h-24 mx-auto rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/30 animate-pulse">
+        <div className="mb-6 relative inline-block">
+          <div className="w-24 h-24 mx-auto rounded-full bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
             <svg
               className="w-12 h-12 text-stone-900"
               fill="none"
@@ -39,18 +38,16 @@ export function UnlockAnimation({ isVisible, course, etymologyName }: UnlockAnim
               />
             </svg>
           </div>
-          {/* Sparkles */}
           <div className="absolute -top-2 -left-2 w-4 h-4 bg-amber-300 rounded-full animate-ping" />
           <div className="absolute -top-1 -right-3 w-3 h-3 bg-amber-400 rounded-full animate-ping delay-100" />
           <div className="absolute -bottom-1 -left-3 w-3 h-3 bg-amber-500 rounded-full animate-ping delay-200" />
         </div>
 
-        {/* Text */}
         <h2 className="text-3xl font-bold text-amber-50 mb-2">
           おめでとうございます！
         </h2>
         <p className="text-amber-200/80 text-lg">
-          <span className="text-amber-400 font-semibold">{etymologyName}</span> をアンロックしました
+          <span className="text-amber-400 font-semibold">{etymologyName}</span> をクリアしました
         </p>
         <p className="text-amber-200/60 text-sm mt-2">
           {course === 'seeker' ? '探究者の道' : course} を進めています

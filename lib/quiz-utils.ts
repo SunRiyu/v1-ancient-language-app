@@ -1,45 +1,43 @@
 import { Question, Etymology } from "./quiz-types";
+import { AD_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/1ad";
+import { CON_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/2con";
+import { DE_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/3de";
+import { EX_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/4ex";
+import { IN_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/5in";
+import { PER_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/6per";
+import { PRE_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/7pre";
+import { PRO_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/8pro";
+import { RE_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/9re";
+import { SUB_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/10sub";
 
 /**
  * 語源参考書に基づいた本格的な語源データ
  * 英語の語彙の約6〜7割を占めると言われるラテン語・ギリシャ語の語根を網羅しています。
  */
 
-
+const PREFIX_QUESTIONS_MAP: Record<string, Question[]> = {
+  ad: AD_QUIZ_QUESTIONS,
+  con: CON_QUIZ_QUESTIONS,
+  de: DE_QUIZ_QUESTIONS,
+  ex: EX_QUIZ_QUESTIONS,
+  in: IN_QUIZ_QUESTIONS,
+  per: PER_QUIZ_QUESTIONS,
+  pre: PRE_QUIZ_QUESTIONS,
+  pro: PRO_QUIZ_QUESTIONS,
+  re: RE_QUIZ_QUESTIONS,
+  sub: SUB_QUIZ_QUESTIONS,
+};
 
 /**
  * 接頭辞IDからクイズデータをロードする
  */
-export const loadPrefixQuestions = async (prefixId: string): Promise<Question[]> => {
-  try {
-    // Map of prefix IDs to their file names and export names
-    const prefixMap: Record<string, { fileName: string; exportName: string }> = {
-      'ad': { fileName: '1ad.ts', exportName: 'AD_QUIZ_QUESTIONS' },
-      'con': { fileName: '2con.ts', exportName: 'CON_QUIZ_QUESTIONS' },
-      'de': { fileName: '3de.ts', exportName: 'DE_QUIZ_QUESTIONS' },
-      'ex': { fileName: '4ex.ts', exportName: 'EX_QUIZ_QUESTIONS' },
-      'in': { fileName: '5in.ts', exportName: 'IN_QUIZ_QUESTIONS' },
-      'per': { fileName: '6per.ts', exportName: 'PER_QUIZ_QUESTIONS' },
-      'pre': { fileName: '7pre.ts', exportName: 'PRE_QUIZ_QUESTIONS' },
-      'pro': { fileName: '8pro.ts', exportName: 'PRO_QUIZ_QUESTIONS' },
-      're': { fileName: '9re.ts', exportName: 'RE_QUIZ_QUESTIONS' },
-      'sub': { fileName: '10sub.ts', exportName: 'SUB_QUIZ_QUESTIONS' },
-    };
-
-    const prefixInfo = prefixMap[prefixId];
-    if (!prefixInfo) {
-      console.warn(`Unknown prefix ID: ${prefixId}`);
-      return [];
-    }
-
-    // Dynamically import the module
-    const module = await import(`@/src/data/expolor/prefixes/${prefixInfo.fileName}`);
-    const questions = module[prefixInfo.exportName];
-    return questions || [];
-  } catch (error) {
-    console.error(`Failed to load prefix questions for ${prefixId}:`, error);
+export const loadPrefixQuestions = (prefixId: string): Question[] => {
+  const questions = PREFIX_QUESTIONS_MAP[prefixId];
+  if (!questions) {
+    console.warn(`Unknown prefix ID: ${prefixId}`);
     return [];
   }
+  return questions;
 };
 
 /**
