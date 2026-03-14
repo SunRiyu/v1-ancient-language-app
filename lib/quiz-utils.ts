@@ -41,16 +41,8 @@ export const loadPrefixQuestions = (prefixId: string): Question[] => {
 };
 
 /**
- * ユーティリティ関数（必要に応じて他のページから呼び出されます）
+ * ユーティリティ関数
  */
-export const getEtymologyById = (id: string) => {
-  return ETIMOLOGY_DATA.find((e) => e.id === id);
-};
-
-export const getQuestionsByCategory = (category: string) => {
-  return QUIZ_QUESTIONS.filter((q) => q.category === category);
-};
-
 export const calculateScore = (answers: { isCorrect: boolean }[]) => {
   const score = answers.filter(a => a.isCorrect).length;
   return { score };
@@ -64,6 +56,7 @@ export const checkPassCriteria = (answers: { isCorrect: boolean }[]) => {
 };
 
 export const generateQuestions = (params: any, type: string): Question[] => {
-  // QUIZ_QUESTIONS からランダムに取得したり、カテゴリで絞り込んだりする処理
-  return QUIZ_QUESTIONS; 
+  // デフォルトの問題生成（接頭辞以外の場合）
+  // 今は空配列を返す - 必要に応じて拡張
+  return [];
 };
