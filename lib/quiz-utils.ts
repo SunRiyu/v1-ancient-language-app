@@ -3,7 +3,7 @@ import { AD_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/1ad";
 import { CON_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/2con";
 import { DE_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/3de";
 import { EX_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/4ex";
-import { IN_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/5in";
+import { IN_IM_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/5in";
 import { PER_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/6per";
 import { PRE_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/7pre";
 import { PRO_QUIZ_QUESTIONS } from "@/src/data/expolor/prefixes/8pro";
@@ -20,7 +20,7 @@ const PREFIX_QUESTIONS_MAP: Record<string, Question[]> = {
   con: CON_QUIZ_QUESTIONS,
   de: DE_QUIZ_QUESTIONS,
   ex: EX_QUIZ_QUESTIONS,
-  in: IN_QUIZ_QUESTIONS,
+  in: IN_IM_QUIZ_QUESTIONS,
   per: PER_QUIZ_QUESTIONS,
   pre: PRE_QUIZ_QUESTIONS,
   pro: PRO_QUIZ_QUESTIONS,
